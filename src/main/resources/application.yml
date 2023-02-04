@@ -1,0 +1,26 @@
+api:
+  client: 'feign-client'
+  url: 'https://jsonplaceholder.typicode.com/'
+  get-all-post: '/posts'
+  get-post: '/posts/{id}'
+
+spring:
+  application:
+    name: open-fiegn-client
+  cloud:
+    openfeign:
+      httpclient:
+        disable-ssl-validation: true
+        enabled: false
+      okhttp:
+        enabled: true
+      client:
+        config:
+          ${api-client}:
+            connectTimeout: 10000
+            readTimeout: 60000
+            requestInterceptors:
+              - com.example.demo.client.config.FeignRequestInterceptor
+            errorDecoder: com.example.demo.client.config.FeignErrorDecoder
+
+
